@@ -1,9 +1,12 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System.Linq;
+
+#if UNITY_EDITOR
 using UnityEditor;
 using UnityEditor.SceneManagement;
-using System.Linq;
+#endif
 
 /// <summary>
 /// オブジェクトと GUID を関連付けて保存するクラス
@@ -96,6 +99,14 @@ public class GUIDComponent : MonoBehaviour, ISerializationCallbackReceiver
 				}
 			}
 		}
+
+#if UNITY_EDITOR
+		if (EditorPrefs.GetBool("GUIDCollecterWindow.showGUIDComponent", true)) {
+			hideFlags = HideFlags.None;
+		} else {
+			hideFlags = HideFlags.HideInInspector;
+		}
+#endif
 	}
 
 	void OnValidate()
